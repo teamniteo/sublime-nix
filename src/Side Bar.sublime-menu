@@ -1,0 +1,10 @@
+[
+{
+    "id" : "nixShell",
+    "caption" : "Reload nix-shell environment",
+    "command": "nix_shell_reload",
+    "args": {
+    	"dirs": []
+    }
+}
+]
