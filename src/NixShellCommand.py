@@ -4,6 +4,7 @@ import subprocess
 import sys
 import os
 import distutils.spawn
+import re
 from pathlib import Path
 
 class NixShellReloadCommand(sublime_plugin.WindowCommand):
@@ -27,13 +28,10 @@ class NixShellReloadCommand(sublime_plugin.WindowCommand):
     print("git found at " + gitPath)
     bashPath = distutils.spawn.find_executable("bash")
     print("bash found at " + bashPath)
-    args = [nixShellPath, "--command", "echo $PATH"]
+    args = [nixShellPath, "--command", "export"]
     print("running " + ' '.join(args))
     print("in " + str(shellFile.parent))
-    print ("Old path:")
-    print(os.environ['PATH'])
-    # output = subprocess.check_output("nix-shell", shell=True)
-    # print(output)
+
     process = subprocess.Popen(args,
                      stdout=subprocess.PIPE,
                      stderr=subprocess.PIPE,
@@ -46,8 +44,10 @@ class NixShellReloadCommand(sublime_plugin.WindowCommand):
     print ("code: " + str(process.returncode))
     print ("stdout: " + str(stdout))
     print ("stderr: " + str(stderr))
-    # print ("currently in path:" + os.environ['PATH'])
-    new_path=str(stdout) + ":" + str(Path(nixShellPath).parent) + ":" + str(Path(bashPath).parent) + ":" + os.environ['PATH']
-    os.environ['PATH'] = new_path
-    print ("New path:")
-    print(os.environ['PATH'])
+
+
+    regex = r'declare -x (\w+)="((?:\\.|[^"\\])+)"'
+
+    new_env = dict(re.findall(regex, stdout.decode('utf8')))
+    print(new_env)
+    os.environ = new_env
