@@ -32,13 +32,13 @@ class NixShellReloadCommand(sublime_plugin.WindowCommand):
     print("running " + ' '.join(args))
     print("in " + str(shellFile.parent))
 
+   # We remove the LD_PRELOAD to make sure we don't run into segfaults.
+    os.environ.pop("LD_PRELOAD", None)
+
     process = subprocess.Popen(args,
                      stdout=subprocess.PIPE,
                      stderr=subprocess.PIPE,
-                     # We empty the path to make sure LD_PRELOAD doesn't get in
-                     # the way.  But we also need to make sure that git is
-                     # there otherwise the `builtins.fetchGit` doesn't work.
-                     env = { "PATH": str(Path(gitPath).parent) + ":" + str(Path(bashPath).parent) },
+                     env = os.environ,
                      cwd = str(shellFile.parent))
     stdout, stderr = process.communicate()
     print ("code: " + str(process.returncode))
