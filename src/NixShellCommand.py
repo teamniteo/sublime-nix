@@ -21,13 +21,8 @@ class NixShellReloadCommand(sublime_plugin.WindowCommand):
     if not shellFile.exists():
         print("No shell file found at " + str(shellFile))
         return
-    bashPath = distutils.spawn.find_executable("bash")
     nixShellPath = distutils.spawn.find_executable("nix-shell")
     print("nix-shell found at " + nixShellPath)
-    gitPath = distutils.spawn.find_executable("git")
-    print("git found at " + gitPath)
-    bashPath = distutils.spawn.find_executable("bash")
-    print("bash found at " + bashPath)
     args = [nixShellPath, "--command", "export"]
     print("running " + ' '.join(args))
     print("in " + str(shellFile.parent))
