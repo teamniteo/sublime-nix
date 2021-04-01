@@ -7,7 +7,6 @@ let
 in pkgs.mkShell {
   buildInputs = with pkgs; [
     customPackage
-    python3Packages.black
   ];
 }
 

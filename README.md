@@ -1,6 +1,6 @@
 # Nix-shell environment switcher for sublime text 3
 
-WARNING: Not at all done, don't use yet.
+STATUS: Ready to try out! (Please leave feedback.)
 
 To try it out:
 
