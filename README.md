@@ -20,3 +20,7 @@ To try it out:
    Optional: Open your console using "View > Show Console" to see what's happening.
 
 Your PATH variable should now be loaded from the `shell.nix` file.
+
+## We're hiring!
+
+At Niteo we regularly contribute back to the Open Source community. If you do too, we'd like to invite you to [join our team](https://niteo.co/careers)!
